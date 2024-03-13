@@ -3,7 +3,7 @@
    padding: 0; 
 }
 body{
-    background-color: #f9fafc;
+    background-color: #ebf2ff;
 }
 .navbar {
     display: flex;
@@ -30,6 +30,7 @@ body{
     border-radius: 6px;
     font-size: 8px;
     font-weight: 500;
+    margin-left: 10px;
 }
 .button:hover{
     border: 2px solid #ff6767;
@@ -63,4 +64,20 @@ body{
         font-size: 20px;
         font-weight: 600;
     }
+}
+.hero_image_container {
+    width: 100%;
+    padding: 10px;
+}
+.hero_image {
+    width: 100%;
+    margin-bottom: 50px;
+}
+.catch_phrase{
+    padding : 20px;
+}
+.catch_phrase_text{
+    margin-bottom: 10px;
+    font-weight: 800;
+    color: #494949;
 }
