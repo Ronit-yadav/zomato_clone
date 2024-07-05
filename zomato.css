@@ -1,222 +1,233 @@
 * {
     margin: 0;
     padding: 0;
-  }
-  
-  body {
+    box-sizing: border-box;
+}
+
+body {
     font-family: 'Merriweather', serif;
     background-color: #ebf2ff;
-  }
-  
-  .navbar {
+}
+
+.navbar {
     display: flex;
     align-items: center;
     justify-content: space-around;
     background-color: #fff;
-  }
-  
-  .navbar__brand {
+    padding: 10px 20px;
+}
+
+.navbar__brand {
     width: 100px;
-  }
-  
-  .navbar__logo {
+}
+
+.navbar__logo {
     width: 100%;
-  }
-  
-  .button__primary  {
-    background-image: linear-gradient(
-      to right,
-      #ff512f 0%,
-       #dd2476 51%,
-       #ff512f 100%
-      );
-      color: #fff;
-      border: none;
-      padding: 12px;
-      border-radius: 6px;
-      font-weight: 600;
-  }
-  
-  .button__primary:hover {
+}
+
+.button__primary {
+    background-image: linear-gradient(to right, #ff512f 0%, #dd2476 51%, #ff512f 100%);
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.button__primary:hover {
     border: 2px solid #FF6767;
     cursor: pointer;
-  }
-  
-  .container {
+}
+
+.container {
     max-width: 100%;
     padding: 20px;
     margin: 0 auto;
-  }
-  
-  .hero__image__container {
+}
+
+.hero__image__container {
     width: 100%;
-  }
-  
-  .hero__image {
+}
+
+.hero__image {
     width: 100%;
     border-radius: 8px;
     box-shadow: 0 25px 50px -12px rgb(0 0 0 / 25%);
-  }
-  
-  .hero__text {
+}
+
+.hero__text {
     font-weight: 800;
     font-size: 30px;
     margin: 20px 0;
     color: #1d3557;
-  }
-  
-  .food__card__description {
+}
+
+.food__card__description {
     padding: 15px;
-  }
-  
-  .food__card {
+}
+
+.food__card {
     background-color: #ebf2ff;
     border-radius: 8px 8px 0 0;
-    height: inherit;
-  }
-  
-  .food__card__image__container {
+    transition: all 0.3s ease;
+}
 
+.food__card__image__container {
     width: 100%;
-    height: relative;
-  }
+    position: relative;
+}
 
-  .food__card:hover{
-    border: 10px solid #ebf2ff;
-    border-radius: 8px 8px 0 0;
+.food__card:hover {
+    border: 2px solid #ebf2ff;
     cursor: pointer;
-    size: 90%;
     box-shadow: 0 25px 50px -12px rgb(0 0 0 / 25%);
-    
-  }
-  
-  .food__image {
+}
+
+.food__image {
     border-radius: 8px 8px 0 0;
     width: 100%;
-  }
-  
-  .explore__menu__text {
-    margin-top: 30px;
-    margin-bottom: 40px;
+}
+
+.explore__menu__text {
+    margin: 30px 0 40px;
     text-align: center;
     font-size: 30px;
     font-weight: 800;
     color: #1d3557;
-  }
-  
-  @media (min-width: 768px) {
-    .explore__menu__lists {
-    margin-top: 45px;
-      display: flex;
-      gap: 15px;
-      padding: 0 30px;
-    }
-  
-    .explore__menu__container {
-      position: relative;
-    }
-  
-    .explore__menu__gradient__bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: linear-gradient(
-        to right,
-        #ff512f 0%,
-         #dd2476 51%,
-         #ff512f 100%
-        );
-      z-index: -3;
-      transform: skewY(-8deg);
-    }
-  
-    #pizza__card {
-      margin-top: -20px;
-      margin-bottom: 30px;
-    }
-  
-    .navbar {
-      justify-content: space-between;
-      padding: 10px 30px;
-    }
-  
-    .hero__container {
-      margin-top: 20px;
-      display: flex;
-      flex-direction: row-reverse;
-      align-items: center;
-    }
-  }
-  
-  @media (min-width: 1024px) {
-    .container {
-       max-width: 70%;
-    }
-  
-    .explore__menu__lists {
-      gap: 25px;
-    }
-  
-     .navbar__brand {
-       width: 150px;
-     }
-  
-     .button__primary  {
-       padding: 20px;
-       font-size: 20px;
-     }
-  
-     .hero__description {
-       width: 100%;
-     }
-  
-     .hero__text {
-       font-size: 50px;
-     }
-  
-     .explore__menu__text {
-       font-size: 48px;
-     }
-  }
+}
 
-  .zomato_footer_section{
+@media (min-width: 768px) {
+    .explore__menu__lists {
+        margin-top: 45px;
+        display: flex;
+        gap: 15px;
+        padding: 0 30px;
+    }
+
+    .explore__menu__container {
+        position: relative;
+    }
+
+    .explore__menu__gradient__bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: linear-gradient(to right, #ff512f 0%, #dd2476 51%, #ff512f 100%);
+        z-index: -3;
+        transform: skewY(-8deg);
+    }
+
+    #pizza__card {
+        margin-top: -20px;
+        margin-bottom: 30px;
+    }
+
+    .navbar {
+        justify-content: space-between;
+        padding: 10px 30px;
+    }
+
+    .hero__container {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        max-width: 70%;
+    }
+
+    .explore__menu__lists {
+        gap: 25px;
+    }
+
+    .navbar__brand {
+        width: 150px;
+    }
+
+    .button__primary {
+        padding: 20px;
+        font-size: 20px;
+    }
+
+    .hero__description {
+        width: 100%;
+    }
+
+    .hero__text {
+        font-size: 50px;
+    }
+
+    .explore__menu__text {
+        font-size: 48px;
+    }
+}
+
+.footer {
+    margin-top: 60px;
+    width: 100%;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.zomato_footer_section {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     width: 100%;
     align-items: center;
     margin-bottom: 20px;
-  }
-  .footer{
-    margin-top: 60px;
-    width: 100%;
-    padding: 20px;
-    background-color: #fff;
-  }
-  .zomato_title{
-    width: 100%;
-  }
+}
 
-  .drop_down{
+.zomato_title {
+    width: 100%;
+}
+
+.drop_down {
     font-size: 30px;
     font-weight: 500;
     color: #232323;
-  }
-  .footer_text_section{
+}
+
+.footer_text_section {
     padding: 20px;
     width: 100%;
     display: flex;
     flex-direction: row;
-    align-items:baseline;
+    align-items: baseline;
     justify-content: space-evenly;
-  }
-  .footer_box{
+    flex-wrap: wrap;
+}
+
+.footer_box {
     padding: 10px;
-  }
-  .footer_box p{
+    flex: 1;
+    min-width: 150px;
+}
+
+.footer_box p {
     margin-top: 10px;
     color: grey;
-    size: 10px;
-  }
+    font-size: 14px;
+}
+
+.footer_box h4 {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.footer_box a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer_box a:hover {
+    color: #ff512f;
+}
