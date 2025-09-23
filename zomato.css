@@ -1,233 +1,169 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* animations.css - drop into your project and link from <head> */
+
+/* small reset for animation smoothness */
+* { backface-visibility: hidden; -webkit-font-smoothing: antialiased; }
+
+/* --- Background subtle motion --- */
+.hero__bg {
+  animation: bgFloat 18s linear infinite;
+  transform-origin: center center;
+}
+@keyframes bgFloat {
+  0%   { transform: translateY(-8px) rotate(-1deg) scale(1);  opacity: .95; }
+  50%  { transform: translateY(8px) rotate(1deg)  scale(1.02); opacity: 1; }
+  100% { transform: translateY(-8px) rotate(-1deg) scale(1);  opacity: .95; }
 }
 
-body {
-    font-family: 'Merriweather', serif;
-    background-color: #ebf2ff;
+/* --- Hero pulse / subtle pop --- */
+.hero__title {
+  animation: heroPop 1400ms cubic-bezier(.2,.9,.3,1) both;
+}
+@keyframes heroPop {
+  0%   { transform: translateY(8px) scale(.995); opacity: 0; }
+  60%  { transform: translateY(-4px) scale(1.01); opacity: 1; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
 }
 
-.navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    background-color: #fff;
-    padding: 10px 20px;
-}
-
-.navbar__brand {
-    width: 100px;
-}
-
-.navbar__logo {
-    width: 100%;
-}
-
+/* --- Button glowing animated gradient & ripple --- */
 .button__primary {
-    background-image: linear-gradient(to right, #ff512f 0%, #dd2476 51%, #ff512f 100%);
-    color: #fff;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 6px;
-    font-weight: 600;
-    transition: all 0.3s ease;
+  position:relative;
+  overflow: hidden;
+}
+.button__primary::before {
+  content:"";
+  position:absolute;inset:0;
+  background: radial-gradient(circle at 10% 20%, rgba(255,255,255,0.08), transparent 20%),
+              linear-gradient(90deg, rgba(255,81,47,0.08), rgba(221,36,118,0.06));
+  z-index:0;pointer-events:none;mix-blend-mode: screen;
+  transition: transform 400ms cubic-bezier(.2,.9,.3,1), opacity 300ms;
+  transform: scale(1);
+}
+.button__primary > * { position:relative; z-index:2; }
+
+/* ripple on hover */
+.button__primary:hover::before {
+  transform: scale(1.08);
+  opacity: 1;
+  filter: blur(4px);
 }
 
-.button__primary:hover {
-    border: 2px solid #FF6767;
-    cursor: pointer;
+/* small underline glide on focus (accessibility) */
+.button__primary:focus {
+  outline: none;
+  box-shadow: 0 6px 26px rgba(221,36,118,0.16);
 }
 
-.container {
-    max-width: 100%;
-    padding: 20px;
-    margin: 0 auto;
-}
-
-.hero__image__container {
-    width: 100%;
-}
-
-.hero__image {
-    width: 100%;
-    border-radius: 8px;
-    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 25%);
-}
-
-.hero__text {
-    font-weight: 800;
-    font-size: 30px;
-    margin: 20px 0;
-    color: #1d3557;
-}
-
-.food__card__description {
-    padding: 15px;
-}
-
+/* --- Floating / tilt cards with image zoom and spotlight --- */
 .food__card {
-    background-color: #ebf2ff;
-    border-radius: 8px 8px 0 0;
-    transition: all 0.3s ease;
+  transform-origin: center;
+  perspective: 1200px; /* deeper 3D feel when children rotate */
+  transition: transform 420ms cubic-bezier(.16,.84,.44,1), box-shadow 420ms, filter 420ms;
+  will-change: transform;
+  /* entrance keys: invisible initially, animate in by keyframe below */
+  opacity: 0;
+  transform: translateY(20px) scale(.995);
+  filter: blur(2px) saturate(.98);
+  animation: cardIn .56s cubic-bezier(.2,.9,.3,1) forwards;
+  /* each card should use --i custom property that controls stagger */
+  animation-delay: calc(var(--i, 0) * 120ms);
 }
 
-.food__card__image__container {
-    width: 100%;
-    position: relative;
+/* actual entrance animation */
+@keyframes cardIn {
+  0%   { opacity:0; transform: translateY(18px) rotate(-0.6deg) scale(.992); filter: blur(2px) saturate(.95); }
+  60%  { opacity:1; transform: translateY(-6px) rotate(0.6deg) scale(1.008); filter: blur(0) saturate(1.05); }
+  100% { opacity:1; transform: translateY(0) rotate(0deg) scale(1); filter: blur(0) saturate(1); }
 }
 
-.food__card:hover {
-    border: 2px solid #ebf2ff;
-    cursor: pointer;
-    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 25%);
+/* On hover: tilt, raise, stronger shadow */
+.food__card:hover,
+.food__card:focus {
+  transform: translateY(-18px) rotate(-1deg) scale(1.03);
+  box-shadow: 0 30px 70px rgba(8,16,30,0.18);
+  z-index: 5;
 }
 
-.food__image {
-    border-radius: 8px 8px 0 0;
-    width: 100%;
+/* slight 3D parallax for image inside card */
+.food__card .food__image {
+  transition: transform 520ms cubic-bezier(.16,.84,.44,1), filter 420ms;
+  transform-origin: center center;
+  will-change: transform;
+  display:block;
+}
+.food__card:hover .food__image,
+.food__card:focus .food__image {
+  transform: scale(1.08) translateY(-6px) rotate(-0.6deg);
+  filter: saturate(1.06) contrast(1.02);
 }
 
-.explore__menu__text {
-    margin: 30px 0 40px;
-    text-align: center;
-    font-size: 30px;
-    font-weight: 800;
-    color: #1d3557;
+/* spotlight glow (more visible on hover) */
+.food__card .spotlight {
+  transition: transform 420ms, opacity 420ms, filter 420ms;
+  opacity: .85;
+  filter: blur(6px);
+}
+.food__card:hover .spotlight { transform: translate(6px,-6px) scale(1.08); opacity: 1; filter: blur(4px); }
+
+/* small micro-interaction: title slide in on hover */
+.food__card .food__title {
+  display:inline-block;
+  transition: transform 320ms cubic-bezier(.2,.9,.3,1);
+}
+.food__card:hover .food__title { transform: translateX(6px); }
+
+/* --- subtle floating of cards when idle (slow breathe) --- */
+.food__card.idleFloat {
+  animation: idleFloat 7s ease-in-out infinite;
+}
+@keyframes idleFloat {
+  0% { transform: translateY(0) rotate(0) scale(1); }
+  50% { transform: translateY(-6px) rotate(-0.3deg) scale(1.01); }
+  100% { transform: translateY(0) rotate(0) scale(1); }
 }
 
-@media (min-width: 768px) {
-    .explore__menu__lists {
-        margin-top: 45px;
-        display: flex;
-        gap: 15px;
-        padding: 0 30px;
-    }
-
-    .explore__menu__container {
-        position: relative;
-    }
-
-    .explore__menu__gradient__bg {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: linear-gradient(to right, #ff512f 0%, #dd2476 51%, #ff512f 100%);
-        z-index: -3;
-        transform: skewY(-8deg);
-    }
-
-    #pizza__card {
-        margin-top: -20px;
-        margin-bottom: 30px;
-    }
-
-    .navbar {
-        justify-content: space-between;
-        padding: 10px 30px;
-    }
-
-    .hero__container {
-        margin-top: 20px;
-        display: flex;
-        flex-direction: row-reverse;
-        align-items: center;
-    }
+/* --- staggered text reveal inside a card (title/meta) --- */
+.food__card .food__title,
+.food__card .food__meta {
+  opacity:0;
+  transform: translateY(6px);
+  animation: textIn .48s cubic-bezier(.2,.9,.3,1) forwards;
+  animation-delay: calc(var(--i, 0) * 120ms + 220ms);
+}
+@keyframes textIn {
+  to { opacity:1; transform: translateY(0); }
 }
 
-@media (min-width: 1024px) {
-    .container {
-        max-width: 70%;
-    }
-
-    .explore__menu__lists {
-        gap: 25px;
-    }
-
-    .navbar__brand {
-        width: 150px;
-    }
-
-    .button__primary {
-        padding: 20px;
-        font-size: 20px;
-    }
-
-    .hero__description {
-        width: 100%;
-    }
-
-    .hero__text {
-        font-size: 50px;
-    }
-
-    .explore__menu__text {
-        font-size: 48px;
-    }
+/* --- small ripple on nav pill activation --- */
+.pill-nav button {
+  position: relative;
+  overflow: visible;
+}
+.pill-nav button.active::after {
+  content:"";
+  position:absolute;left:50%;top:50%;width:10px;height:10px;
+  border-radius:50%;transform:translate(-50%,-50%);
+  background: rgba(255,255,255,0.12); box-shadow: 0 8px 24px rgba(221,36,118,0.12);
+  animation: pillPulse 900ms ease-out;
+}
+@keyframes pillPulse {
+  0% { transform: translate(-50%,-50%) scale(.6); opacity:1; }
+  100% { transform: translate(-50%,-50%) scale(6); opacity:0; }
 }
 
-.footer {
-    margin-top: 60px;
-    width: 100%;
-    padding: 20px;
-    background-color: #fff;
+/* --- hero CTA subtle float button --- */
+.button__primary.glow {
+  animation: btnFloat 4.6s ease-in-out infinite;
+}
+@keyframes btnFloat {
+  0% { transform: translateY(0) scale(1); filter:brightness(1); }
+  50% { transform: translateY(-6px) scale(1.01); filter:brightness(1.02); }
+  100% { transform: translateY(0) scale(1); filter:brightness(1); }
 }
 
-.zomato_footer_section {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    width: 100%;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.zomato_title {
-    width: 100%;
-}
-
-.drop_down {
-    font-size: 30px;
-    font-weight: 500;
-    color: #232323;
-}
-
-.footer_text_section {
-    padding: 20px;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: baseline;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-}
-
-.footer_box {
-    padding: 10px;
-    flex: 1;
-    min-width: 150px;
-}
-
-.footer_box p {
-    margin-top: 10px;
-    color: grey;
-    font-size: 14px;
-}
-
-.footer_box h4 {
-    margin-bottom: 10px;
-    font-size: 18px;
-}
-
-.footer_box a {
-    color: inherit;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.footer_box a:hover {
-    color: #ff512f;
-}
+/* Accessibility: reduce motion users */
+@media (prefers-reduced-motion: reduce) {
+  .hero__bg, .food__card, .button__primary, .button__primary.glow, .pill-nav button.active::after {
+    animation: none !important;
+    transition: none !important;
+  }
+                                               }
